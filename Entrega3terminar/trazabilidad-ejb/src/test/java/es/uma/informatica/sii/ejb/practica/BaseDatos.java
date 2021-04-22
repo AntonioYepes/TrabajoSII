@@ -10,9 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import es.uma.informatica.sii.ejb.practica.entidades.Ingrediente;
-import es.uma.informatica.sii.ejb.practica.entidades.Lote;
-import es.uma.informatica.sii.ejb.practica.entidades.Producto;
+import es.uma.informatica.sii.ejb.practica.entidades.*;
+
 
 public class BaseDatos {
 	public static void inicializaBaseDatos(String nombreUnidadPersistencia) {
@@ -21,52 +20,30 @@ public class BaseDatos {
 		
 		em.getTransaction().begin();
 		
-		Ingrediente carne = new Ingrediente ("Carne picada");
-		Ingrediente pimienta = new Ingrediente ("Pimienta");
-		Ingrediente especias = new Ingrediente("Especias de hamburguesa");
-		Ingrediente pimenton = new Ingrediente ("Pimentón");
-		Ingrediente sal = new Ingrediente ("Sal");
-		Ingrediente azucar = new Ingrediente ("Azúcar");
-		Ingrediente perejil = new Ingrediente ("Perejil");
+		Centro etsii = new Centro();
+		etsii.setNombre("etsii");
+		etsii.setDireccion("Malaga");
+		etsii.setTelefonoConsejeria(952000000);
 		
-		for (Ingrediente ingrediente: new Ingrediente [] {carne, pimienta, especias, pimenton, sal, azucar, perejil}) {
-			em.persist(ingrediente);
-		}
+		Titulacion informatica = new Titulacion();
+		informatica.setNombre("informatica");
+		informatica.setCreditos(240);
+		//informatica.setCentros(Stream.of(etsii).collect(Collectors.toList()));
 		
-		Producto chorizo = new Producto ("Chorizo");
-		Producto salchicha = new Producto ("Salchicha");
-		Producto hamburguesa = new Producto ("Hamburguesa");
+		Titulacion computadores = new Titulacion();
+		computadores.setNombre("computadores");
+		computadores.setCreditos(240);
+		//computadores.setCentros(Stream.of(etsii).collect(Collectors.toList()));
 		
-		chorizo.setIngredientes(Stream.of(carne, pimienta, pimenton, sal)
-				.collect(Collectors.toSet()));
+		Titulacion software = new Titulacion();
+		software.setNombre("software");
+		software.setCreditos(240);
+		//software.setCentros(Stream.of(etsii).collect(Collectors.toList()));
 		
-		salchicha.setIngredientes(Stream.of(carne, sal, azucar, perejil)
-				.collect(Collectors.toSet()));
+		//Relacion de centro y titulaciones
+		etsii.setTitulaciones(Stream.of(informatica, computadores, software).collect(Collectors.toList()));
 		
-		hamburguesa.setIngredientes(Stream.of(carne, especias, sal, azucar)
-				.collect(Collectors.toSet()));
 		
-		for (Producto producto: new Producto [] {chorizo, salchicha, hamburguesa}) {
-			em.persist(producto);
-		}
-		
-		Lote lote = new Lote ("LT1", chorizo, BigDecimal.TEN, Date.valueOf("2021-04-11"));
-		lote.setLoteIngredientes(new HashMap<Ingrediente, String>());
-		lote.getLoteIngredientes().put(carne, "C1");
-		lote.getLoteIngredientes().put(pimienta, "Pi1");
-		lote.getLoteIngredientes().put(pimenton, "PM1");
-		lote.getLoteIngredientes().put(sal, "S1");
-		
-		em.persist(lote);
-		
-		lote = new Lote ("LT2", chorizo, BigDecimal.valueOf(25L), Date.valueOf("2021-04-12"));
-		lote.setLoteIngredientes(new HashMap<Ingrediente, String>());
-		lote.getLoteIngredientes().put(carne, "C2");
-		lote.getLoteIngredientes().put(pimienta, "Pi2");
-		lote.getLoteIngredientes().put(pimenton, "PM2");
-		lote.getLoteIngredientes().put(sal, "S2");
-		
-		em.persist(lote);
 		
 		em.getTransaction().commit();
 		

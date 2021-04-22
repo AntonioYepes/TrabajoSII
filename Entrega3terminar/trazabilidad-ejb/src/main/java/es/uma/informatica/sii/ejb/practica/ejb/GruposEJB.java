@@ -20,8 +20,6 @@ import es.uma.informatica.sii.ejb.practica.entidades.*;
 @Stateless
 public class GruposEJB{
 	
-	private static final Logger LOG = Logger.getLogger(LotesEJB.class.getCanonicalName());
-	
 	@PersistenceContext(name="Trazabilidad")
 	private EntityManager em;
 
@@ -36,7 +34,7 @@ public class GruposEJB{
 	}
 
 	public List<Grupo> obtenerGrupos() throws TrazabilidadException {
-		List<Grupo> grupos = em.createQuery("Select nombre from Grupo", Grupo.class).getResultList();
+		List<Grupo> grupos = em.createQuery("Select * from Grupo", Grupo.class).getResultList();
 		if (grupos == null) {
 			throw new RuntimeErrorException(null, "Error a cambiar");
 		}

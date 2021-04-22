@@ -51,6 +51,10 @@ public class Titulacion implements Serializable {
 		this.creditos = creditos;
 	}
 	
+	public void setCentros(List<Centro> centros) {
+		this.centros = centros;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

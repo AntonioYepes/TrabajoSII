@@ -54,6 +54,10 @@ public class Centro implements Serializable {
 	public void setTelefonoConsejeria(Integer telefonoConsejeria) {
 		this.telefonoConsejeria = telefonoConsejeria;
 	}
+	
+	public void setTitulaciones(List<Titulacion> titulaciones) {
+		this.titulaciones = titulaciones;
+	}
 
 	@Override
 	public int hashCode() {
